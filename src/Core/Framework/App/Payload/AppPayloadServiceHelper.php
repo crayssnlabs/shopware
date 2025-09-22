@@ -41,7 +41,7 @@ class AppPayloadServiceHelper
     {
         return new Source(
             $this->shopUrl,
-            $this->shopIdProvider->getShopId(),
+            $this->shopIdProvider->getShopId()->id,
             $appVersion,
             $this->inAppPurchase->getJWTByExtension($appName),
         );
