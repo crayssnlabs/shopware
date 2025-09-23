@@ -80,11 +80,7 @@ class MailActionController extends AbstractController
             $errors[$name] = $this->mailTemplateService->validateTemplate($content, $vars);
         }
 
-        if (!empty($errors)) {
-            return new JsonResponse($errors, Response::HTTP_BAD_REQUEST);
-        }
-
-        return new JsonResponse(null, Response::HTTP_NO_CONTENT);
+        return new JsonResponse($errors, Response::HTTP_OK);
     }
 
     #[Route(path: '/api/_action/mail-template/build', name: 'api.action.mail_template.build', methods: ['POST'])]
