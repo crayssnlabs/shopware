@@ -205,6 +205,7 @@ class EntityDefinitionQueryHelper
             if ($isAssociation) {
                 return null;
             }
+
             return self::getTranslatedField($definition, $field);
         }
         // This logic handles the fields behind the 'translated' property
@@ -218,12 +219,14 @@ class EntityDefinitionQueryHelper
             unset($fieldNameParts[0]);
             $test = \implode('.', $fieldNameParts);
             $translationDefinition = $definition->getTranslationDefinition();
+
             return self::getField($test, $translationDefinition, $translationDefinition::ENTITY_NAME ?? '');
         }
         if ($field instanceof TranslatedField) {
             if ($isAssociation) {
                 return null;
             }
+
             return $field;
         }
 
@@ -235,6 +238,7 @@ class EntityDefinitionQueryHelper
             if ($isAssociation) {
                 return null;
             }
+
             return $field;
         }
 
