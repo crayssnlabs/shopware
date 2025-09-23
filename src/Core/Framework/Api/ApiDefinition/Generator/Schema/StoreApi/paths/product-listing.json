@@ -126,6 +126,9 @@
                     },
                     {
                         "x-parameter-group": "productListingCriteria"
+                    },
+                    {
+                        "x-parameter-group": "productListingFlags"
                     }
                 ],
                 "responses": {
