@@ -22,7 +22,7 @@
             display: none;
         }
 
-        .sw-mail-template-detail__copy_icon {
+        .sw-tree-item__context_button {
             display: none;
         }
 
@@ -34,19 +34,17 @@
             display: none;
         }
 
-        .sw-tree-item__children {
-            .sw-mail-template-detail__copy_icon {
-                color: $color-gray-700;
-                max-width: 15px;
-                display: block;
+        .sw-mail-template-detail__copy_icon {
+            color: $color-gray-700;
+            max-width: 15px;
+            display: block;
 
-                :hover {
-                    color: $color-shopware-brand-500;
-                }
+            :hover {
+                color: $color-shopware-brand-500;
+            }
 
-                :active {
-                    color: $color-shopware-brand-800;
-                }
+            :active {
+                color: $color-shopware-brand-800;
             }
         }
     }
@@ -62,9 +60,77 @@
         }
     }
 
+    .sw-mail-template-detail__validation-sidebar {
+        &-container {
+            padding: 20px;
+            border-top: 1px solid $color-gray-300;
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-size-32);
+
+            .sw-mail-template-detail__validation-sidebar-result {
+                &-divider {
+                    border: none ;
+                    border-top: 1px solid var(--color-border-secondary-default);
+                }
+
+                &-error,&-success {
+                    display: flex;
+                    padding-top: var(--scale-size-32);
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: var(--scale-size-16);
+                    align-self: stretch;
+
+                     &-title {
+                         color: var(--color-text-primary-default);
+                         font-size: var(--font-size-xs);
+                         margin: 0;
+                     }
+
+                    &-element {
+                        position: relative;
+                        margin: 0;
+                        width: 100%;
+                        background-color: var(--color-background-tertiary-default);
+                        padding: var(--scale-size-8);
+                        gap: var(--scale-size-6);
+
+                        &-icon {
+                            margin-top: var(--scale-size-2);
+                        }
+
+                        &-hint {
+                            position: absolute;
+                            top: var(--scale-size-8);
+                            right: var(--scale-size-8);
+                            color: var(--color-text-secondary-default);
+                            font-size: var(--font-size-2xs);
+                        }
+                    }
+                }
+                &-success {
+                    flex-direction: row;
+                    gap: var(--scale-size-6);
+                }
+            }
+        }
+    }
+
     .sw-mail-template-detail__attachments-info-grid {
         position: relative;
         margin-top: 20px;
         border: 1px solid $color-gray-300;
     }
+
+    &__field-hint {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--scale-size-4);
+
+        &-icon-container {
+            margin-top: -1px;
+        }
+    }
+
 }
