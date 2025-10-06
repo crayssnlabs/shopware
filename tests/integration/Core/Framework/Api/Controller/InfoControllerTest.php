@@ -71,7 +71,7 @@ class InfoControllerTest extends TestCase
 
         $expected = [
             'version' => '6.7.9999999.9999999-dev',
-            'shopId' => $shopId,
+            'shopId' => $shopId->id,
             'versionRevision' => str_repeat('0', 32),
             'adminWorker' => [
                 'enableAdminWorker' => true,
