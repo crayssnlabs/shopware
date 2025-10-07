@@ -47,11 +47,6 @@
       "ignore": [
         "composer/pcre"
       ]
-    },
-    "patches": {
-      "symfony/framework-bundle": {
-        "Fix lock with env + service id": "patches/framework-bundle-lock-env-with-service.patch"
-      }
     }
   },
   "config": {
@@ -92,7 +87,6 @@
     "cocur/slugify": "^4.3.0",
     "composer/composer": "^2.8.5",
     "composer/semver": "^3.4.0",
-    "cweagans/composer-patches": "^1.7",
     "doctrine/dbal": "^4.3.1",
     "doctrine/inflector": "^2.0",
     "dompdf/dompdf": "3.1.0",
@@ -143,7 +137,7 @@
     "symfony/event-dispatcher-contracts": "~3.6.0",
     "symfony/filesystem": "~7.3.0",
     "symfony/finder": "~7.3.0",
-    "symfony/framework-bundle": "~7.3.0",
+    "symfony/framework-bundle": "7.3.x-dev as 7.3.4",
     "symfony/http-client": "~7.3.0",
     "symfony/http-client-contracts": "~3.6.0",
     "symfony/http-foundation": "~7.3.0",
