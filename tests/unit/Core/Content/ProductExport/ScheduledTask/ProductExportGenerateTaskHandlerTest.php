@@ -75,6 +75,11 @@ class ProductExportGenerateTaskHandlerTest extends TestCase
             self::prepareProductExportEntity(false, true, 10),
             true,
         ];
+        yield 'already running but stale' => [
+            // Should run because: isRunning is true but last activity is stale
+            self::prepareStaleProductExportEntity(),
+            true,
+        ];
     }
 
     private static function getGeneratedAtTimestamp(?bool $generatedAtBeforeInterval): ?\DateTime
@@ -97,6 +102,19 @@ class ProductExportGenerateTaskHandlerTest extends TestCase
         $productExportEntity->setInterval($interval);
         $productExportEntity->setUniqueIdentifier('TestExportEntity');
         $productExportEntity->setId('afdd4e21be6b4ad59656fb856d0375e5');
+
+        return $productExportEntity;
+    }
+
+    private static function prepareStaleProductExportEntity(): ProductExportEntity
+    {
+        $productExportEntity = new ProductExportEntity();
+        $productExportEntity->setIsRunning(true);
+        $productExportEntity->setInterval(10);
+        $productExportEntity->setUniqueIdentifier('TestExportEntityStale');
+        $productExportEntity->setId('bfdd4e21be6b4ad59656fb856d0375e6');
+        // Mark entity as stale by setting updatedAt far in the past (> staleMinSeconds)
+        $productExportEntity->setUpdatedAt(new \DateTimeImmutable('-1 hour'));
 
         return $productExportEntity;
     }

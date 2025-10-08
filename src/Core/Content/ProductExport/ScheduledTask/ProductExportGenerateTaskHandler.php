@@ -40,7 +40,9 @@ final class ProductExportGenerateTaskHandler extends ScheduledTaskHandler
         private readonly AbstractSalesChannelContextFactory $salesChannelContextFactory,
         private readonly EntityRepository $salesChannelRepository,
         private readonly EntityRepository $productExportRepository,
-        private readonly MessageBusInterface $messageBus
+        private readonly MessageBusInterface $messageBus,
+        private readonly int $staleMinSeconds = 300,
+        private readonly float $staleIntervalFactor = 2.0
     ) {
         parent::__construct($scheduledTaskRepository, $logger);
     }
@@ -118,7 +120,21 @@ final class ProductExportGenerateTaskHandler extends ScheduledTaskHandler
     private function shouldBeRun(ProductExportEntity $productExport, \DateTimeImmutable $now): bool
     {
         if ($productExport->getIsRunning()) {
-            return false;
+            // If a previous run was aborted unexpectedly, the flag may be stuck.
+            // Consider the run stale if the entity hasn't been updated for a
+            // reasonable duration based on the configured interval.
+            if ($this->isStale($productExport, $now)) {
+                // Reset the running flag to allow scheduling to continue
+                $this->productExportRepository->update([
+                    [
+                        'id' => $productExport->getId(),
+                        'isRunning' => false,
+                    ],
+                ], Context::createCLIContext());
+            // Fall through to the time-based checks
+            } else {
+                return false;
+            }
         }
 
         if ($productExport->getGeneratedAt() === null) {
@@ -126,5 +142,20 @@ final class ProductExportGenerateTaskHandler extends ScheduledTaskHandler
         }
 
         return $now->getTimestamp() - $productExport->getGeneratedAt()->getTimestamp() >= $productExport->getInterval();
+    }
+
+    private function isStale(ProductExportEntity $productExport, \DateTimeImmutable $now): bool
+    {
+        // Determine the last activity timestamp: updatedAt when available, otherwise createdAt
+        $lastActivity = $productExport->getUpdatedAt() ?? $productExport->getCreatedAt();
+        if ($lastActivity === null) {
+            return false;
+        }
+
+        // Threshold: max(configured min seconds, configured factor * interval)
+        $interval = max(1, $productExport->getInterval());
+        $threshold = max($this->staleMinSeconds, (int) \ceil($this->staleIntervalFactor * $interval));
+
+        return ($now->getTimestamp() - $lastActivity->getTimestamp()) >= $threshold;
     }
 }

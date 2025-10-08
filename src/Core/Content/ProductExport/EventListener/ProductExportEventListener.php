@@ -52,6 +52,8 @@ class ProductExportEventListener implements EventSubscriberInterface
                     [
                         'id' => $primaryKey,
                         'generatedAt' => null,
+                        // Reset stuck runs when a user/admin edits the export
+                        'isRunning' => false,
                     ],
                 ],
                 $event->getContext()
@@ -71,8 +73,12 @@ class ProductExportEventListener implements EventSubscriberInterface
 
     private function productExportWritten(EntityWriteResult $writeResult): bool
     {
+        // Only act on actual edits to the export configuration.
+        // Skip internal writes that explicitly set generatedAt or isRunning
+        // so we don't interfere with the export lifecycle.
         return $writeResult->getEntityName() === 'product_export'
             && $writeResult->getOperation() !== EntityWriteResult::OPERATION_DELETE
-            && !\array_key_exists('generatedAt', $writeResult->getPayload());
+            && !\array_key_exists('generatedAt', $writeResult->getPayload())
+            && !\array_key_exists('isRunning', $writeResult->getPayload());
     }
 }
