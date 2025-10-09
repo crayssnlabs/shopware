@@ -45,12 +45,11 @@
             height: calc(100% - 171px);
         }
 
-        &-container__tree {
+        &-container-tree {
             border: none;
 
             .sw-tree__content {
                 height: 100%;
-                //height: 427px;
             }
 
             .icon--regular-circle-xxs {
@@ -69,7 +68,7 @@
                 display: none;
             }
 
-            .sw-mail-template-detail__copy_icon {
+            .sw-mail-template-detail__copy-icon {
                 color: $color-gray-700;
                 max-width: 15px;
                 display: block;
