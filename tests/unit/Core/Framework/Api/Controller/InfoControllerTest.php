@@ -26,6 +26,7 @@ use Shopware\Core\Framework\MessageQueue\Stats\StatsService;
 use Shopware\Core\Framework\Plugin;
 use Shopware\Core\Framework\Store\InAppPurchase;
 use Shopware\Core\Framework\Test\Store\StaticInAppPurchaseFactory;
+use Shopware\Core\Framework\Test\TestCaseBase\EnvTestBehaviour;
 use Shopware\Core\Maintenance\System\Service\AppUrlVerifier;
 use Shopware\Core\Test\Stub\Symfony\StubKernel;
 use Shopware\Core\Test\Stub\SystemConfigService\StaticSystemConfigService;
@@ -42,6 +43,8 @@ use Symfony\Component\Routing\RouterInterface;
 #[CoversClass(InfoController::class)]
 class InfoControllerTest extends TestCase
 {
+    use EnvTestBehaviour;
+
     private InfoController $infoController;
 
     private ParameterBagInterface&MockObject $parameterBagMock;
@@ -62,6 +65,10 @@ class InfoControllerTest extends TestCase
 
     public function testConfig(): void
     {
+        $this->setEnvVars([
+            'APP_URL' => 'https://app.url',
+        ]);
+
         $this->createInstance();
 
         $shopId = ShopId::v2('shop-id');
@@ -80,6 +87,8 @@ class InfoControllerTest extends TestCase
         static::assertArrayHasKey('adminWorker', $data);
         static::assertArrayHasKey('shopId', $data);
         static::assertSame('shop-id', $data['shopId']);
+        static::assertArrayHasKey('appUrl', $data);
+        static::assertSame('https://app.url', $data['appUrl']);
 
         $workerConfig = $data['adminWorker'];
         static::assertArrayHasKey('enableAdminWorker', $workerConfig);
