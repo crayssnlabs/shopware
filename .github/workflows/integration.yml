@@ -22,7 +22,7 @@ jobs:
         name:
           - "Platform"
         php-version:
-          - "8.5rc1"
+          - "8.2"
         shard:
           - '1'
           - '2'
