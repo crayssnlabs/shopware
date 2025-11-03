@@ -49,9 +49,9 @@
             {% block sw_flow_list_grid_columns_event_name %}
             <template #column-eventName="{ item }">
                 <div v-if="isValidTrigger(item.eventName)">
-                    <strong>
+                    <p class="sw-flow-list__event-name">
                         {{ getTranslatedEventName(item.eventName) }}
-                    </strong>
+                    </p>
                     <p>{{ item.eventName }}</p>
                 </div>
                 <div v-else>
@@ -63,7 +63,6 @@
 
             {% block sw_flow_list_grid_actions %}
             <template #actions="{ item }">
-
                 {% block sw_flow_list_grid_actions_duplicate %}
                 <sw-context-menu-item
                     class="sw-flow-list__item-duplicate"

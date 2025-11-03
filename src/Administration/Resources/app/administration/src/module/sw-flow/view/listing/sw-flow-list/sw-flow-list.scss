@@ -1,14 +1,16 @@
-@import "~scss/variables";
-
-.sw-flow-list-card {
-    overflow: hidden;
-
-    .mt-card__content {
-        padding: 0;
-    }
-}
-
 .sw-flow-list {
+    .sw-flow-list-card {
+        overflow: hidden;
+
+        .mt-card__content {
+            padding: 0;
+        }
+    }
+
+    &__event-name {
+        font-weight: var(--font-weight-semibold);
+    }
+
     .sw-flow-list__empty-state {
         min-height: 550px;
     }
