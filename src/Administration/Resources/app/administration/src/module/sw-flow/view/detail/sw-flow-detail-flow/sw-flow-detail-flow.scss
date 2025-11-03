@@ -1,19 +1,16 @@
-@import "~scss/variables";
-@import "~scss/mixins";
-
 .sw-flow-detail-flow {
     &__content {
         display: flex;
         flex-direction: column;
         margin: auto;
-        max-width: $content-width;
+        max-width: 60rem;
         transition: max-width 0.3s ease-in-out;
     }
 
     &__warning-unknow-trigger {
         p {
             &:nth-child(2) {
-                margin-top: 20px;
+                margin-top: var(--scale-size-20);
             }
         }
     }
@@ -21,56 +18,61 @@
     &__trigger-card {
         display: grid;
         grid-template-columns: auto 1fr;
-        grid-gap: 48px;
+        grid-gap: var(--scale-size-48);
         align-items: start;
     }
 
     &__trigger-select {
         min-width: 324px;
-        background: $color-white;
-        border-radius: 8px;
-        border: 1px solid $color-gray-300;
-        box-shadow: 0 3px 6px 0 rgba(120, 138, 155, 20%);
-        padding: 24px;
+        background: var(--color-elevation-surface-raised);
+        border-radius: var(--border-radius-card);
+        border: 1px solid var(--color-border-primary-default);
+        padding: var(--scale-size-24);
         transition: all 100ms ease-in-out;
+        box-shadow: 0 3px 6px 0 var(--color-elevation-shadow-default);
 
         &:hover {
-            box-shadow: 0 6px 10px 0 rgba(120, 138, 155, 20%);
+            box-shadow: 0 6px 10px 0 var(--color-elevation-shadow-default);
         }
     }
 
     &__trigger-explain {
-        padding: 24px;
-        border: 2px dashed $color-gray-300;
-        border-radius: 8px;
-        color: $color-darkgray-200;
+        padding: var(--scale-size-24);
+        border: 2px dashed var(--color-border-primary-default);
+        border-radius: var(--border-radius-card);
         width: 420px;
 
         h4 {
-            margin-bottom: 12px;
+            font-size: var(--font-size-s);
+            line-height: var(--font-line-height-s);
+            color: var(--color-text-primary-default);
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: var(--scale-size-8);
         }
 
         p {
-            font-size: $font-size-xs;
-            line-height: 22px;
+            font-size: var(--font-size-xs);
+            line-height: var(--font-line-height-s);
+            color: var(--color-text-primary-default);
         }
     }
 
     &__oval {
-        @include circle(12px);
-
+        width: var(--scale-size-12);
+        height: var(--scale-size-12);
+        border-radius: var(--border-radius-round);
+        background: var(--color-elevation-surface-raised);
+        border: 1px solid var(--color-border-primary-default);
         position: absolute;
         top: -6px;
         left: -5px;
-        background: $color-white;
-        border: 1px solid $color-gray-400;
         z-index: 2;
     }
 
     &__sequence-diagram {
         position: relative;
-        margin-left: 29px;
-        padding: 0 0 44px;
+        margin-left: var(--scale-size-28);
+        padding: 0 0 var(--scale-size-40);
     }
 
     &__position {
@@ -78,50 +80,53 @@
         display: flex;
 
         &:not(:last-child) .sw-flow-detail-flow__sequences {
-            padding-bottom: 63px;
-            border-bottom: 2px solid $color-gray-400;
+            padding-bottom: var(--scale-size-64);
+            border-bottom: 2px solid var(--color-border-primary-default);
             width: 100%;
         }
 
         & .sw-flow-detail-flow__sequences {
-            padding-top: 63px;
+            padding-top: var(--scale-size-64);
         }
 
         & .sw-flow-detail-flow__position-connection {
-            @include size(24px);
-
+            width: var(--scale-size-24);
+            height: var(--scale-size-24);
             position: absolute;
             left: 0;
             top: 118px;
-            border-bottom: 2px dashed $color-gray-400;
-            border-left: 2px dashed $color-gray-400;
-            border-bottom-left-radius: 40px;
+            border-bottom: 2px dashed var(--color-border-primary-default);
+            border-left: 2px dashed var(--color-border-primary-default);
+            border-bottom-left-radius: var(--scale-size-40);
         }
 
         &:last-child .sw-flow-detail-flow__position-plus {
-            @include circle(24px);
-            @include flex-centering;
-
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: var(--scale-size-24);
+            height: var(--scale-size-24);
             cursor: pointer;
             position: absolute;
-            color: $color-darkgray-200;
+            color: var(--color-icon-primary-default);
             top: 155px;
             left: -11px;
-            background: $color-white;
-            border-radius: 16px;
-            border: 1px solid $color-gray-500;
+            background: var(--color-elevation-surface-raised);
+            border-radius: var(--border-radius-round);
+            border: 1px solid var(--color-border-primary-default);
             z-index: 2;
 
             .mt-icon {
-                @include size(12px);
+                width: var(--scale-size-12);
+                height: var(--scale-size-12);
             }
 
-            &:hover:not([disabled]) {
-                background: $color-gray-100;
+            &:hover {
+                background-color: var(--color-elevation-surface-hover);
             }
 
             &:disabled {
-                background: $color-gray-100;
+                background: var(--color-background-tertiary-default);
             }
         }
 
@@ -129,7 +134,7 @@
             position: absolute;
             bottom: -8px;
             right: -6px;
-            color: $color-gray-500;
+            color: var(--color-border-primary-default);
         }
 
         &:not(:last-child) .icon--regular-plus-xs {
@@ -139,7 +144,7 @@
         &::before {
             display: block;
             content: "";
-            border-left: 2px dashed $color-gray-400;
+            border-left: 2px dashed var(--color-border-primary-default);
             z-index: 1;
         }
 
@@ -147,13 +152,13 @@
             display: block;
             content: "";
             height: 165px;
-            border-left: 2px dashed $color-gray-400;
+            border-left: 2px dashed var(--color-border-primary-default);
             z-index: 1;
         }
     }
 
     &__sequences {
-        margin-left: 32px;
+        margin-left: var(--scale-size-32);
     }
 
     .sw-block-field__block {
@@ -174,5 +179,5 @@
 .list-enter,
 .list-leave-to {
     opacity: 0;
-    transform: translateX(30px);
+    transform: translateX(var(--scale-size-30));
 }

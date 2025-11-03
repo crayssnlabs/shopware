@@ -27,6 +27,7 @@
         >
             {{ $tc('sw-flow.detail.warningText') }}
         </mt-banner>
+
         {% block sw_flow_detail_trigger_card %}
         <div class="sw-flow-detail-flow__trigger-card">
             {% block sw_flow_detail_flow_trigger_select %}
@@ -79,7 +80,6 @@
                     :key="getSequenceId(sequence)"
                     class="sw-flow-detail-flow__position list-item"
                 >
-
                     {% block sw_flow_sequence_icon_plus %}
                     <div
                         class="sw-flow-detail-flow__position-plus"
@@ -90,7 +90,7 @@
                         @keydown.enter="onAddRootSequence"
                     >
                         <mt-icon
-                            size="16px"
+                            size="14px"
                             name="regular-plus-xs"
                         />
                     </div>
