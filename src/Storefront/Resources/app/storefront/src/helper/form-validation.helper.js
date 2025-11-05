@@ -182,7 +182,7 @@ export default class FormValidation {
             fields = form.querySelectorAll('[data-validation], [required]');
         }
 
-        fields.forEach((field) => {
+        [...fields].forEach((field) => {
             const fieldErrors = this.validateField(field);
 
             if (fieldErrors && fieldErrors.length > 0) {
