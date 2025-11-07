@@ -6,9 +6,23 @@
 
 ## Core
 
+### Allow overwriting Doctrine wrapperClass on Primary/Replica setups
+
+It's now possible to overwrite the `wrapperClass` on the `Doctrine\DBAL\Connection` instance. This is useful if you want to use Doctrine MySQL Comeback to automatically reconnect if the MySQL connection is lost.
+
+```bash
+composer require facile-it/doctrine-mysql-come-back ^3.0
+```
+
+and specifying the `wrapperClass` in your `.env`:
+
+```
+DATABASE_URL=mysql://root:root@database/shopware?driverOptions[x_reconnect_attempts]=5&wrapperClass=Facile\DoctrineMySQLComeBack\Doctrine\DBAL\Connection
+```
+
 ### Removal of old `changelog` handling
 As we changed how we process and generate changelogs the "old" changelog files are no longer needed.
-Therefore, we removed all the internal code used to generate and validate them. 
+Therefore, we removed all the internal code used to generate and validate them.
 The whole `Shopware\Core\Framework\Changelog` namespace was removed. The code is not needed anymore, you should adjust the `RELEASE_INFO` and `UPGRADE` files manually instead.
 
 ## Administration
