@@ -36,6 +36,9 @@ curl -X POST "http://localhost:8000/api/_action/sync" \
 
 ## Core
 
+### Fixed variant deletion cleanup
+The `update` method in `Shopware\Core\Content\Product\DataAbstractionLayer\VariantListingUpdater` now cleans up unused `product_configurator_setting` entries when variants are deleted, ensuring data consistency.
+
 ### Robots.txt parsing
 A new `Shopware\Storefront\Page\Robots\Parser\RobotsDirectiveParser` has been introduced to parse `robots.txt` files. This new service provides improved error tracking and adds new events for better extensibility.
 As part of this change, the constructor for `Shopware\Storefront\Page\Robots\Struct\DomainRuleStruct` is now deprecated for string parameters. You should use the new parser to create a `ParsedRobots` object to pass to the constructor instead.

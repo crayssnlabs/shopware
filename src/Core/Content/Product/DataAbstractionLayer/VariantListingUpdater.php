@@ -37,6 +37,8 @@ class VariantListingUpdater
 
         $versionBytes = Uuid::fromHexToBytes($context->getVersionId());
 
+        $this->cleanupUnusedConfiguratorSettings($ids, $versionBytes);
+
         $listingConfiguration = $this->getListingConfiguration($ids, $context);
 
         $displayParent = new RetryableQuery(
@@ -158,5 +160,42 @@ class VariantListingUpdater
         }
 
         return $listingConfiguration;
+    }
+
+    /**
+     * Clean up product_configurator_setting entries for options not used by any remaining variants
+     *
+     * @param array<string> $parentIds
+     */
+    private function cleanupUnusedConfiguratorSettings(array $parentIds, string $versionId): void
+    {
+        if (empty($parentIds)) {
+            return;
+        }
+
+        $parentIds = Uuid::fromHexToBytesList($parentIds);
+
+        $this->connection->executeStatement(
+            'DELETE FROM product_configurator_setting pcs
+             WHERE pcs.product_id IN (:parentIds)
+             AND pcs.product_version_id = :versionId
+             AND NOT EXISTS (
+                 -- Find any variant that still uses this option
+                 SELECT 1
+                 FROM product_option po
+                 INNER JOIN product p
+                     ON p.id = po.product_id                    -- Match variant
+                     AND p.version_id = po.product_version_id
+                     AND p.parent_id = pcs.product_id            -- Belongs to parent
+                     AND p.version_id = pcs.product_version_id
+                 WHERE po.property_group_option_id = pcs.property_group_option_id  -- Same option
+                     AND po.product_version_id = pcs.product_version_id
+             )',
+            [
+                'parentIds' => $parentIds,
+                'versionId' => $versionId,
+            ],
+            ['parentIds' => ArrayParameterType::BINARY]
+        );
     }
 }
